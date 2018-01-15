@@ -1,0 +1,28 @@
+###############################################################################
+#                          Generated on phpdocker.io                          #
+###############################################################################
+version: "3.1"
+services:
+    mariadb:
+      image: mariadb:10.1
+      container_name: php-benelux-2018-mariadb
+      working_dir: /application
+      environment:
+        - MYSQL_ROOT_PASSWORD=belgium
+        - MYSQL_DATABASE=beeriously
+        - MYSQL_USER=growler
+        - MYSQL_PASSWORD=belgium
+      ports:
+        - "62338:3306"
+
+    php-fpm:
+      build:
+        context: .
+        dockerfile: phpdocker/php-fpm/Dockerfile
+      working_dir: /application
+      container_name: php-benelux-2018-php-fpm
+      volumes:
+        - .:/application
+        - ./phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/7.1/fpm/conf.d/99-overrides.ini
+      links:
+        - mariadb
