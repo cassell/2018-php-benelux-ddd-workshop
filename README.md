@@ -30,7 +30,7 @@ docker run --rm --interactive --tty --network 2018phpbeneluxdddworkshop_default 
 If you can then run and only see that tests are failing then you are good to go:
 ````
 make unit
-make integeration
+make integration
 ````
 or
 ````
