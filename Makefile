@@ -32,6 +32,7 @@ chrome:
 	open -a "Google Chrome" http://localhost:62337/
 
 sleepForDatabase:
+	@echo "Sleeping while MariaDB loads. I didn't want to cause more Docker problems by using healthcheck"
 	sleep 30
 
 clean-database:
