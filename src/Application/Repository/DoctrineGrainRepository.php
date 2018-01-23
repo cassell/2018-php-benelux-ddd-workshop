@@ -23,7 +23,7 @@ class DoctrineGrainRepository extends EntityRepository implements GrainRepositor
      */
     public function findAutomaticallyConvertingGrain(MinimumDiastaticPowerSpecification $specification): array
     {
-
+        return [];
     }
 
 }

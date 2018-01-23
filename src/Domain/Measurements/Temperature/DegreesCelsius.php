@@ -21,16 +21,12 @@ class DegreesCelsius implements Temperature
 
     public static function fromFahrenheit(DegreesFahrenheit $fahrenheit): self
     {
-
+        return new self(0);
     }
 
     public function getValue(): float
     {
-
-    }
-
-    public static function fromFahrenheit(DegreesFahrenheit $fahrenheit): self
-    {
+        return 0;
 
     }
 

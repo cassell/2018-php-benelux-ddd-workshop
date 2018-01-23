@@ -10,5 +10,4 @@ interface Temperature
 
     public static function getSymbol(): string;
 
-    public function __toString(): string;
 }
