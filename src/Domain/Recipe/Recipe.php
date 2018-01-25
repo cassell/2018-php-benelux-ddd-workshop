@@ -2,46 +2,72 @@
 
 namespace Beeriously\Domain\Recipe;
 
-use Beeriously\Domain\Event\EventRecorder;
+use Beeriously\Domain\Ingredients\Grains\Grain;
+use Beeriously\Domain\Measurements\Weight\Kilograms;
 
 class Recipe
 {
-    use EventRecorder;
+    private $id; // persist in recipe table
+    private $events = [];  // persist in events table
 
     /**
-     * @var RecipeHistory
+     * @var RecipeName
      */
-    private $recipeHistory;
-    private $id;
     private $recipeName;
 
-    private function __construct(RecipeHistory $recipeHistory)
+    private function __construct(RecipeHistory $events)
     {
-        $this->recipeHistory = $recipeHistory;
-        foreach($this->recipeHistory as $event) {
+        $this->events = $events->toArray();
+        foreach ($this->events as $event) {
             $this->applyEvent($event);
         }
     }
 
-    public static function newRecipe(RecipeName $name): Recipe
-    {
-        $id = RecipeId::newId();
-        $createdEvent = new RecipeWasCreated($id, $name);
-        $recipeHistory = new RecipeHistory([$createdEvent]);
-        return new self($recipeHistory);
-    }
-
+    // framework or repository will call this (or done by magic)
     public static function rehydrate(RecipeHistory $recipeHistory)
     {
         return new self($recipeHistory);
     }
 
-    public function applyRecipeWasCreatedEvent(RecipeWasCreated $event)
+    public static function newRecipe(RecipeName $name, \DateTimeImmutable $occurredOn): Recipe
+    {
+        $id = RecipeId::newId(); // aggregate id
+
+        $createdEvent = new RecipeWasCreated($id, $name, $occurredOn);
+
+        return new self(new RecipeHistory([$createdEvent]));
+    }
+
+    protected function applyRecipeWasCreatedEvent(RecipeWasCreated $event)
     {
         $this->id = $event->getRecipeId();
         $this->recipeName = $event->getRecipeName();
     }
 
+    public function changeName(RecipeName $name, \DateTimeImmutable $occurredOn)
+    {
+        $this->recordThat(new RecipeNameWasChanged($this->id,new RecipeName($this->getName()), $name, $occurredOn));
+    }
+
+    protected function applyRecipeNameWasChangedEvent(RecipeNameWasChanged $event)
+    {
+        $this->recipeName = $event->getNewName()->getValue();
+    }
+
+    public function addGrain(Grain $grain, Kilograms $kilograms, \DateTimeImmutable $occurredOn = null): void
+    {
+        // TODO: Implement
+    }
+
+    public function getWeightOfGrainsInKilos(): Kilograms
+    {
+        // TODO: Implement
+    }
+
+    public function getName(): RecipeName
+    {
+        return new RecipeName($this->recipeName);
+    }
 
     private function applyEvent(RecipeEvent $event)
     {
@@ -56,9 +82,11 @@ class Recipe
         return 'apply' . end($classParts) . 'Event';
     }
 
-    public function getName(): RecipeName
+    private function recordThat(RecipeEvent $event)
     {
-        return $this->recipeName;
+        $this->events[] = $event;
+        $this->applyEvent($event);
     }
+
 
 }

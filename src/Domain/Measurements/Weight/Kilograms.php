@@ -18,7 +18,7 @@ class Kilograms
 
     public static function fromPounds(Pounds $pound)
     {
-        return new self($pound->getValue() / Pounds::POUNDS_PER_KILOGRAM);
+        return new self($pound->getValue() * Pounds::POUNDS_PER_KILOGRAM);
     }
 
     /**
@@ -27,5 +27,10 @@ class Kilograms
     public function getValue(): float
     {
         return $this->value;
+    }
+
+    public function add(Kilograms $kilograms)
+    {
+        return new self($this->getValue() + $kilograms->getValue());
     }
 }

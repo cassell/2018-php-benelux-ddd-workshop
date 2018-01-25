@@ -28,4 +28,16 @@ class GrainType
      */
     private $description = '';
 
+    public function getId(): GrainTypeId
+    {
+        return GrainTypeId::fromString($this->id);
+    }
+
+    public function getDescription(): GrainTypeDescription
+    {
+        return new GrainTypeDescription($this->description);
+    }
+
+
+
 }

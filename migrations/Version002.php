@@ -48,7 +48,9 @@ VALUES
 	('05c86123-e79a-4b19-bffa-6a816b8fcfac', '660e8578-b0ba-4b09-adfa-a3919f3552be', 'Briess Caramel 60L', 60.00, 0),
 	('37474bd6-4d7c-4fc8-bd4d-8bf2dfc53857', 'fd9931d1-ab6c-4db9-8778-ace7f7692839', 'Pale Ale Malt', 3.00, 50),
 	('86a610d3-76fa-45cf-b951-632fc691ef8e', 'fd9931d1-ab6c-4db9-8778-ace7f7692839', 'Premium Pilsner Malt', 1.50, 110),
-	('75329bf8-abc3-4a1e-bda5-9acb778e2ee5', 'fd9931d1-ab6c-4db9-8778-ace7f7692839', 'Winter Wheat', 3.50, 0);
+	('75329bf8-abc3-4a1e-bda5-9acb778e2ee5', 'fd9931d1-ab6c-4db9-8778-ace7f7692839', 'Winter Wheat', 3.50, 0),
+	('7dd325ec-9db8-4746-a7d9-bf5977811e05', 'fd9931d1-ab6c-4db9-8778-ace7f7692839', 'Marris Otter Pale Malt', 3.50, 120),
+	('1c1d4b6b-c743-43c2-8833-d6cce396058f', 'cc8a2041-40c6-4a15-996c-9afa1a761c57', 'Rolled Oats', 3.00, 0);
 ");
 
 

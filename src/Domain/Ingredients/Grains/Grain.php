@@ -81,6 +81,10 @@ class Grain
         return new DegreesLintner($this->lintner);
     }
 
+    public function getId(): GrainId
+    {
+        return GrainId::fromString($this->id);
+    }
 
 
 }
