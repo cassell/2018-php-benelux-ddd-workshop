@@ -46,6 +46,9 @@ class Recipe
 
     public function changeName(RecipeName $name, \DateTimeImmutable $occurredOn)
     {
+        if($name->getValue() == $this->getName()->getValue()) {
+            throw new \InvalidArgumentException("Name is the same");
+        }
         $this->recordThat(new RecipeNameWasChanged($this->id,new RecipeName($this->getName()), $name, $occurredOn));
     }
 

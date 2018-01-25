@@ -27,6 +27,22 @@ class RecipeEventSourcingTest  extends ContainerAwareTestCase
         $this->assertEquals("Recursiweizen",$recipe->getName()->getValue());
     }
 
+    public function testRecipeChangeNameUserDidNotChange()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $recipe = Recipe::newRecipe(new RecipeName('NEIPHPA'),new \DateTimeImmutable());
+        $recipe->changeName(new RecipeName('NEIPHPA'),new \DateTimeImmutable());
+    }
+
+    public function testAddZeroWeightGrainToRecipe()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("Unable to measure less than 0.1 on scale.");
+        $recipe = Recipe::newRecipe(new RecipeName('NEIPHPA'), new \DateTimeImmutable());
+        $recipe->addGrain($this->getTwoRow(), Kilograms::fromPounds(new Pounds(0)));
+
+    }
+
     public function testAddGrainToRecipe()
     {
         $recipe = Recipe::newRecipe(new RecipeName('NEIPHPA'),new \DateTimeImmutable());
